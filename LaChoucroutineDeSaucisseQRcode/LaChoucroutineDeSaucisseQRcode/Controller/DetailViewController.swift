@@ -14,36 +14,42 @@ class DetailViewController: UIViewController, WKUIDelegate {
     @IBOutlet weak var detailLabel: CopyLabel!
     
     var qrData: QRcode?
-    //var webView: WKWebView!
+
     @IBOutlet weak var webView: WKWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         detailLabel.text = qrData?.code
-        UIPasteboard.general.string = detailLabel.text
-        showToast(message : "Texte copié dans le presse papier")
+        
+        //UIPasteboard.general.string = detailLabel.text
+        //showToast(message : "Texte copié dans le presse papier")
 
-        let myURL = URL(string: qrData?.code ?? "")
+        //Config
+        let webConfiguration = WKWebViewConfiguration()
+        webView = WKWebView(frame: self.view.bounds, configuration: webConfiguration)
+        webView.uiDelegate = self
+        //webView.navigationDelegate = self
+        //view = webView
+
+        
+        //Création de l'URL + chargement dans la WebView
+        //let myURL = URL(string: qrData?.code ?? "")
+        let myURL = URL(string: "https://fr.wikipedia.org")
         let myRequest = URLRequest(url: myURL!)
         webView.load(myRequest)
     }
 
+    
     @IBAction func openInWebAction(_ sender: Any) {
         if let url = URL(string: qrData?.code ?? ""), UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:])
         } else {
-            showToast(message : "Invalide URL")
+            showToast(message : "URL Invalide")
         }
     }
     
     
-    override func loadView() {
-        let webConfiguration = WKWebViewConfiguration()
-        webView = WKWebView(frame: .zero, configuration: webConfiguration)
-        webView.uiDelegate = self
-        view = webView
-    }
     
 
 

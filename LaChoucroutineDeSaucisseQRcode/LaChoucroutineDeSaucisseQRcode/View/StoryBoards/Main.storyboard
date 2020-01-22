@@ -11,12 +11,12 @@
         <!--Le QR choucroute-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="QRScannerViewController" customModule="QRScanner" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="QRScannerViewController" customModule="La_Choucroutine_De_QR_Code" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k5d-QF-enP" customClass="QRScannerView" customModule="QRScanner" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k5d-QF-enP" customClass="QRScannerView" customModule="La_Choucroutine_De_QR_Code" customModuleProvider="target">
                                 <rect key="frame" x="20" y="108" width="374" height="668"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                             </view>
@@ -72,7 +72,7 @@
         <!--Detail View Controller-->
         <scene sceneID="BsY-B8-BzH">
             <objects>
-                <viewController id="CBx-2W-LBw" customClass="DetailViewController" customModule="QRScanner" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="CBx-2W-LBw" customClass="DetailViewController" customModule="La_Choucroutine_De_QR_Code" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xW8-wg-wFa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -83,7 +83,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHn-E2-d9y" customClass="CopyLabel" customModule="QRScanner" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHn-E2-d9y" customClass="CopyLabel" customModule="La_Choucroutine_De_QR_Code" customModuleProvider="target">
                                 <rect key="frame" x="20" y="141" width="374" height="27"/>
                                 <fontDescription key="fontDescription" name="GurmukhiMN" family="Gurmukhi MN" pointSize="23"/>
                                 <nil key="textColor"/>
@@ -98,9 +98,9 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Na7-8Y-WFc">
-                                <rect key="frame" x="158.5" y="810" width="97" height="32"/>
+                                <rect key="frame" x="138.5" y="810" width="137" height="32"/>
                                 <fontDescription key="fontDescription" name="GurmukhiMN" family="Gurmukhi MN" pointSize="17"/>
-                                <state key="normal" title="Open in web"/>
+                                <state key="normal" title="Ouvrir dans Safari"/>
                                 <connections>
                                     <action selector="openInWebAction:" destination="CBx-2W-LBw" eventType="touchUpInside" id="JS3-84-WXJ"/>
                                 </connections>
@@ -118,7 +118,6 @@
                             <constraint firstItem="ApC-3K-ab7" firstAttribute="leading" secondItem="Egi-UG-f8P" secondAttribute="leading" constant="16" id="RUc-uk-ryw"/>
                             <constraint firstItem="ApC-3K-ab7" firstAttribute="top" secondItem="bHn-E2-d9y" secondAttribute="bottom" constant="20" id="RZD-mV-Cus"/>
                             <constraint firstItem="Egi-UG-f8P" firstAttribute="trailing" secondItem="bHn-E2-d9y" secondAttribute="trailing" constant="20" id="TjA-1X-5gK"/>
-                            <constraint firstItem="Egi-UG-f8P" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="bHn-E2-d9y" secondAttribute="bottom" constant="60" id="UmK-nc-pom"/>
                             <constraint firstItem="bHn-E2-d9y" firstAttribute="leading" secondItem="Egi-UG-f8P" secondAttribute="leading" constant="20" id="dM9-cz-rjd"/>
                             <constraint firstItem="Yzx-qz-HeC" firstAttribute="top" secondItem="Egi-UG-f8P" secondAttribute="top" constant="20" id="pfS-IJ-eqO"/>
                             <constraint firstItem="bHn-E2-d9y" firstAttribute="top" secondItem="Yzx-qz-HeC" secondAttribute="bottom" constant="10" id="yW3-nd-uXb"/>

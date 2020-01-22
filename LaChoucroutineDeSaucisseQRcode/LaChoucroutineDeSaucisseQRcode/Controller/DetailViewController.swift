@@ -11,8 +11,9 @@ import WebKit
 
 class DetailViewController: UIViewController, WKUIDelegate {
 
-    @IBOutlet weak var detailLabel: CopyLabel!
-    
+
+    @IBOutlet weak var urlLabel: UILabel!
+        
     var qrData: QRcode?
 
     @IBOutlet weak var webView: WKWebView!
@@ -20,22 +21,14 @@ class DetailViewController: UIViewController, WKUIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        detailLabel.text = qrData?.code
+        urlLabel.text = qrData?.code
+        
         
         //UIPasteboard.general.string = detailLabel.text
         //showToast(message : "Texte copié dans le presse papier")
 
-        //Config
-        let webConfiguration = WKWebViewConfiguration()
-        webView = WKWebView(frame: self.view.bounds, configuration: webConfiguration)
-        webView.uiDelegate = self
-        //webView.navigationDelegate = self
-        //view = webView
-
-        
         //Création de l'URL + chargement dans la WebView
-        //let myURL = URL(string: qrData?.code ?? "")
-        let myURL = URL(string: "https://fr.wikipedia.org")
+        let myURL = URL(string: qrData?.code ?? "")
         let myRequest = URLRequest(url: myURL!)
         webView.load(myRequest)
     }

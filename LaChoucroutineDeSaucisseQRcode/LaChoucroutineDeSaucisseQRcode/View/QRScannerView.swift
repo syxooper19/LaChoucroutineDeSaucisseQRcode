@@ -22,8 +22,6 @@ class QRScannerView: UIView {
     
     var captureSession: AVCaptureSession?
     
-    let laPhoto = AVCapturePhotoOutput()
-    var screenshotEnCours = false
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -51,17 +49,17 @@ class QRScannerView: UIView {
 
 extension QRScannerView {
     
-    
-    
     var isRunning: Bool {
         return captureSession?.isRunning ?? false
     }
+    
     
     func debutScan() {
        captureSession?.startRunning()
     }
     
     func stopScan() {
+        
         captureSession?.stopRunning()
         delegate?.qrScanningDidStop()
     }
@@ -99,6 +97,23 @@ extension QRScannerView {
             return
         }
         
+        
+
+        //--------------------
+        let laBellePhoto = AVCapturePhotoOutput()
+              
+        if (captureSession?.canAddOutput(laBellePhoto) ?? false){
+              captureSession?.addOutput(laBellePhoto)
+            print("on est dans le addOutput")
+            
+            let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
+            
+            laBellePhoto.capturePhoto(with: settings, delegate: self)
+            
+        }
+        //--------------------
+        
+        
         self.layer.session = captureSession
         self.layer.videoGravity = .resizeAspectFill
         
@@ -115,8 +130,7 @@ extension QRScannerView {
         
         //Et la on sauvegarde la photo
         //captureSession?.addOutput(laPhoto)
-        
-        
+
         
         delegate?.qrScanningSucceededWithCode(code)
     }
@@ -134,12 +148,7 @@ extension QRScannerView: AVCaptureMetadataOutputObjectsDelegate {
             guard let stringValue = readableObject.stringValue else { return }
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
             
-            /*
-            let photoSettings = AVCapturePhotoSettings()
-            if !screenshotEnCours {
-                screenshotEnCours = true
-                laPhoto.capturePhoto(with: photoSettings, delegate: self)
-            }*/
+
             
             found(code: stringValue)
         }
@@ -148,32 +157,41 @@ extension QRScannerView: AVCaptureMetadataOutputObjectsDelegate {
 }
 
 
-/*
+
 extension QRScannerView: AVCapturePhotoCaptureDelegate {
+    
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-        screenshotEnCours = false
+        
+        print("func photoOutput")
+        //screenshotEnCours = false
         guard let imageData = photo.fileDataRepresentation() else {
-            print("Error while generating image from photo capture data.");
             return
         }
-        guard let qrImage = UIImage(data: imageData) else {
-            print("Unable to generate UIImage from image data.");
-            return
-        }
+        let qrImage = UIImage(data: imageData)
+        
         //testImageView.image = qrImage
-        UIImageWriteToSavedPhotosAlbum(qrImage, self, #selector(savedImage(_:error:context:)), nil)
+        UIImageWriteToSavedPhotosAlbum(qrImage!, self, #selector(image), nil)
 
      }
     
     
-    @objc func savedImage(_ im:UIImage, error:Error?, context:UnsafeMutableRawPointer?) {
-        if let err = error {
-            print(err)
-            return
+    
+   @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            // we got back an error!
+            print("erreur func image")
+            print(error)
+            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+        } else {
+            print("Ca marche batard")
+            let ac = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
         }
-        print("success")
     }
+    
+    
  
 }
-*/
+
 

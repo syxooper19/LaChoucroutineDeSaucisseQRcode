@@ -67,7 +67,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="992.79999999999995" y="27.436281859070466"/>
+            <point key="canvasLocation" x="992.75362318840587" y="26.785714285714285"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="BsY-B8-BzH">
@@ -83,7 +83,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHn-E2-d9y" customClass="CopyLabel" customModule="La_Choucroutine_De_QR_Code" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHn-E2-d9y">
                                 <rect key="frame" x="20" y="141" width="374" height="27"/>
                                 <fontDescription key="fontDescription" name="GurmukhiMN" family="Gurmukhi MN" pointSize="23"/>
                                 <nil key="textColor"/>
@@ -125,7 +125,7 @@
                         <viewLayoutGuide key="safeArea" id="Egi-UG-f8P"/>
                     </view>
                     <connections>
-                        <outlet property="detailLabel" destination="bHn-E2-d9y" id="x8e-oA-iCb"/>
+                        <outlet property="urlLabel" destination="bHn-E2-d9y" id="cBu-tD-1kj"/>
                         <outlet property="webView" destination="ApC-3K-ab7" id="hho-ZU-FGd"/>
                     </connections>
                 </viewController>

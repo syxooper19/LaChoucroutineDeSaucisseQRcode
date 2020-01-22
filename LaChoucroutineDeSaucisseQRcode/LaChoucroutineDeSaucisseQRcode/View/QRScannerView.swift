@@ -12,16 +12,18 @@ import AVFoundation
 
 protocol QRScannerViewDelegate: class {
     func qrScanningDidFail()
-    func qrScanningSucceededWithCode(_ str: String?)
+    func qrScanningSucceededWithCode(_ str: String?, andPhoto photo: UIImage?)
     func qrScanningDidStop()
 }
 
 class QRScannerView: UIView {
     
     weak var delegate: QRScannerViewDelegate?
-    
+    var codeFound: String?
     var captureSession: AVCaptureSession?
-    
+    var alreadyScannedOnce: Bool = false
+    let capturePhotoOutput = AVCapturePhotoOutput()
+    let metaDataOutput = AVCaptureMetadataOutput()
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -85,13 +87,11 @@ extension QRScannerView {
             return
         }
         
-        let metadataOutput = AVCaptureMetadataOutput()
-        
-        if (captureSession?.canAddOutput(metadataOutput) ?? false) {
-            captureSession?.addOutput(metadataOutput)
+        if (captureSession?.canAddOutput(metaDataOutput) ?? false) {
+            captureSession?.addOutput(metaDataOutput)
             
-            metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            metadataOutput.metadataObjectTypes = [.qr, .ean13]
+            metaDataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+            metaDataOutput.metadataObjectTypes = [.qr, .ean13]
         } else {
             scanningDidFail()
             return
@@ -100,16 +100,10 @@ extension QRScannerView {
         
 
         //--------------------
-        let laBellePhoto = AVCapturePhotoOutput()
               
-        if (captureSession?.canAddOutput(laBellePhoto) ?? false){
-              captureSession?.addOutput(laBellePhoto)
-            print("on est dans le addOutput")
-            
-            let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
-            
-            laBellePhoto.capturePhoto(with: settings, delegate: self)
-            
+        if (captureSession?.canAddOutput(capturePhotoOutput) ?? false){
+              captureSession?.addOutput(capturePhotoOutput)
+            //added capture photo output
         }
         //--------------------
         
@@ -127,12 +121,12 @@ extension QRScannerView {
     }
     
     func found(code: String) {
+        codeFound = code
         
         //Et la on sauvegarde la photo
-        //captureSession?.addOutput(laPhoto)
-
+        let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
+        capturePhotoOutput.capturePhoto(with: settings, delegate: self)
         
-        delegate?.qrScanningSucceededWithCode(code)
     }
     
 }
@@ -141,17 +135,20 @@ extension QRScannerView: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput,
                         didOutput metadataObjects: [AVMetadataObject],
                         from connection: AVCaptureConnection) {
-        stopScan()
-        
-        if let metadataObject = metadataObjects.first {
-            guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
-            guard let stringValue = readableObject.stringValue else { return }
-            AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-            
+        //stopScan()
+        if (!alreadyScannedOnce) {
+            alreadyScannedOnce = true
+            if let metadataObject = metadataObjects.first {
+                guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
+                guard let stringValue = readableObject.stringValue else { return }
+                AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+                
 
-            
-            found(code: stringValue)
+                
+                found(code: stringValue)
+            }
         }
+        
     }
     
 }
@@ -170,8 +167,12 @@ extension QRScannerView: AVCapturePhotoCaptureDelegate {
         let qrImage = UIImage(data: imageData)
         
         //testImageView.image = qrImage
-        UIImageWriteToSavedPhotosAlbum(qrImage!, self, #selector(image), nil)
+        //UIImageWriteToSavedPhotosAlbum(qrImage!, self, #selector(image), nil)
 
+        //Et on prévient qu'on a scanné
+        delegate?.qrScanningSucceededWithCode(codeFound, andPhoto: qrImage)
+        
+        stopScan()
      }
     
     

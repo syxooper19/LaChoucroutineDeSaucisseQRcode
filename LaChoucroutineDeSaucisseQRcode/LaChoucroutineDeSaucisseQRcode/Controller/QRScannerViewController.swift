@@ -56,6 +56,20 @@ class QRScannerViewController: UIViewController {
         let buttonTitle = scannerView.isRunning ? "STOP" : "SCAN"
         sender.setTitle(buttonTitle, for: .normal)
     }
+    
+    func writeImage(image: UIImage) {
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.finishWriteImage), nil)
+    }
+
+    @objc private func finishWriteImage(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+        if (error != nil) {
+            // Something wrong happened.
+            print("error occurred: \(String(describing: error))")
+        } else {
+            // Everything is alright.
+            print("saved success!")
+        }
+    }
 }
 
 
@@ -69,12 +83,12 @@ extension QRScannerViewController: QRScannerViewDelegate {
         presentAlert(withTitre: "Error", message: "Echec du scan. Place ta choucroute autrement et réessaye frérot !")
     }
     
-    func qrScanningSucceededWithCode(_ str: String?) {
+    func qrScanningSucceededWithCode(_ str: String?, andPhoto photo: UIImage?) {
         self.qrData = QRcode(code: str)
+        if let photo = photo {
+            writeImage(image: photo)
+        }
     }
-    
-    
-    
 }
 
 

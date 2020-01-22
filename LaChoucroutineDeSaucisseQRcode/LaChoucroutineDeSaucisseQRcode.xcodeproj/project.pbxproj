@@ -331,13 +331,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = S465Y3T5DA;
+				DEVELOPMENT_TEAM = WZETG56CSP;
 				INFOPLIST_FILE = LaChoucroutineDeSaucisseQRcode/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bastien.LaChoucroutineDeQRcode.QRcode;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bastien.LaChoucroutineDeQRcode.QRcodeVAL;
 				PRODUCT_NAME = "La Choucroutine De QR Code";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
